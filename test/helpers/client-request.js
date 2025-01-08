@@ -1,9 +1,9 @@
-import https from "https";
-import http from "http";
+const https = require("https");
+const http = require("http");
 
-export const httpRequest = (url) => {
+module.exports.httpRequest = (url) => {
   return new Promise((resolve, reject) => {
-    const { hostname, pathname, port, protocol } = new URL(url);
+    const {hostname, pathname, port, protocol} = new URL(url);
 
     const requestOptions = {
       hostname,
@@ -20,18 +20,7 @@ export const httpRequest = (url) => {
         rawData += chunk;
       });
       res.on('end', () => {
-        if (res.statusCode < 200 || res.statusCode >= 300) {
-          const errorMsg =
-            // @ts-ignore
-            (res.body && (res.body.message || res.body)) || res.statusMessage || `Http Error ${res.statusCode}`;
-          reject({ errorMsg });
-        } else {
-          try {
-            resolve(rawData && JSON.parse(rawData));
-          } catch (error) {
-            reject(error);
-          }
-        }
+        resolve({data: rawData, status: res.statusCode});
       });
     });
 
