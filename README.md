@@ -33,11 +33,10 @@ General notes:
 
 1. If you remove `nock.cleanAll()` the issues goes away.
 1. This issue isn't present in v13.x versions of nock using client request.
-1. This issue isn't present in 14.0.0-beta.7 (pre msw interceptors) of nock for either fetch or client request.
-1. fetch works fine in latest beta version
+1. This issue isn't present in `nock@14.0.0-beta.7` (pre MSW interceptors) for either fetch or client request.
 1. not sure why, but each test file includes a fresh nock module
-   1. nock is activated when the module in init'd (via back.js which default to dryRun setup, which run nock.activate())
-   1. this constructs the msw interceptors multiple times (MSW also get fresh modules)
+   1. nock is activated when the module in init'd (via back.js which default to `dryRun` setup, which run `nock.activate()`)
+   1. this constructs the MSW interceptors multiple times (MSW also get fresh modules)
    1. intercepted MSW requests go to the first nock module, rather than the one on which the nock interceptors were set up on.
 
 
